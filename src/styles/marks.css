@@ -1,0 +1,44 @@
+.cross{
+  position: relative;
+  cursor: pointer;
+}
+
+.cross::before,
+.cross::after{
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 4px;
+  background-color: white;
+}
+
+.cross::before{
+  transform: rotate(45deg);
+}
+
+.cross::after{
+  transform: rotate(-45deg);
+}
+
+.circle {
+  position: relative;
+  cursor: pointer;
+}
+
+.circle::before{
+  content: '';
+  position: absolute;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  background-color: white;
+}
+
+.circle::after{
+  content: '';
+  position: absolute;
+  width: calc(75% - 8px);
+  height: calc(75% - 8px);
+  border-radius: 50%;
+  background-color: black;
+}
