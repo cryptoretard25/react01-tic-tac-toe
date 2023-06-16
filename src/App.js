@@ -1,24 +1,14 @@
 import logo from "./logo.svg";
 import "./App.css";
 import "./styles/marks.css";
+import React from "react";
+import Game from "./modules/game";
 
-// const game = {
-//   player: "x",
-//   board: (() =>
-//     Array.from({ length: 3 }, (_, row) =>
-//       Array.from({ length: 3 }, (item, col) => {
-//         item = <Square />;
-//         console.log(row + ": " + col);
-//       })
-//     ))(),
-//   nextTurn() {
-//     this.player = this.player === "x" ? "o" : "x";
-//   },
-// };
+const game = new Game();
 
-const field = Array.from({length:3},()=>Array.from({length:3},()=><Square/>))
-
-
+const field = Array.from({ length: 3 }, () =>
+  Array.from({ length: 3 }, () => <Square />)
+);
 
 function Square() {
   function handleClick(e) {
@@ -27,24 +17,24 @@ function Square() {
   return <div className="square" onClick={handleClick}></div>;
 }
 
+function Field() {
+  return game.board.map((row, rowIndex) => {
+    return (
+      <div className="row" key={rowIndex}>
+        {row.map((item, colIndex) => {
+          return (
+            <Square key={`${rowIndex}${colIndex}`} />
+          );
+        })}
+      </div>
+    );
+  });
+}
+
 function App() {
   return (
     <div className="App">
-      <div className="row">
-        <Square />
-        <Square />
-        <Square />
-      </div>
-      <div className="row">
-        <Square />
-        <Square />
-        <Square />
-      </div>
-      <div className="row">
-        <Square />
-        <Square />
-        <Square />
-      </div>
+      <Field />
     </div>
   );
 }
