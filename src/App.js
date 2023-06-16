@@ -2,39 +2,37 @@ import logo from "./logo.svg";
 import "./App.css";
 import "./styles/marks.css";
 import React from "react";
-import Game from "./modules/game";
 
-const game = new Game();
-
-const field = Array.from({ length: 3 }, () =>
-  Array.from({ length: 3 }, () => <Square />)
-);
-
-function Square() {
-  function handleClick(e) {
-    e.target.classList.add("cross");
-  }
-  return <div className="square" onClick={handleClick}></div>;
+function Square({ mark, value }) {
+  return <div className={`square ${mark}`}>{value}</div>;
 }
 
-function Field() {
-  return game.board.map((row, rowIndex) => {
-    return (
-      <div className="row" key={rowIndex}>
-        {row.map((item, colIndex) => {
-          return (
-            <Square key={`${rowIndex}${colIndex}`} />
-          );
-        })}
+function Board() {
+  return (
+    <>
+      <div className="row">
+        <Square value="1" />
+        <Square value="2" />
+        <Square value="3" />
       </div>
-    );
-  });
+      <div className="row">
+        <Square value="4" />
+        <Square value="5" />
+        <Square value="6" />
+      </div>
+      <div className="row">
+        <Square value="7" />
+        <Square value="8" />
+        <Square value="9" />
+      </div>
+    </>
+  );
 }
 
 function App() {
   return (
     <div className="App">
-      <Field />
+      <Board />
     </div>
   );
 }
