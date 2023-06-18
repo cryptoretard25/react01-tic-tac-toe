@@ -2,14 +2,16 @@ import "./App.css";
 import "./styles/marks.css";
 import React from "react";
 import { useState } from "react";
+import Game from "./modules/game";
+
+const game = new Game(3);
 
 function Square() {
   const [mark, setMark] = useState(null)
 
   function handleClick(e){
     setMark(()=>{
-      const random = Math.floor(Math.random()*2)
-      return random === 0? 'circle': 'cross'
+      return game.nextTurn();
     })
   }
 
@@ -17,6 +19,7 @@ function Square() {
 }
 
 function Board() {
+  const [cells, setCells] = useState(game.board)
   return (
     <>
       <div className="row">

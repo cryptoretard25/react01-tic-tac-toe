@@ -1,10 +1,10 @@
-.cross{
+.x{
   position: relative;
   cursor: pointer;
 }
 
-.cross::before,
-.cross::after{
+.x::before,
+.x::after{
   content: '';
   position: absolute;
   width: 80%;
@@ -12,20 +12,20 @@
   background-color: white;
 }
 
-.cross::before{
+.x::before{
   transform: rotate(45deg);
 }
 
-.cross::after{
+.x::after{
   transform: rotate(-45deg);
 }
 
-.circle {
+.o {
   position: relative;
   cursor: pointer;
 }
 
-.circle::before{
+.o::before{
   content: '';
   position: absolute;
   width: 75%;
@@ -34,7 +34,7 @@
   background-color: white;
 }
 
-.circle::after{
+.o::after{
   content: '';
   position: absolute;
   width: calc(75% - 8px);
