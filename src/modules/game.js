@@ -1,22 +1,27 @@
 const { log } = console;
 
-class Game {
+export default class Game {
   constructor(size) {
     this.size = size;
-    this.player = null;
+    this.player = "x";
+    this.winner = null;
+    this.draw = null;
     this.gameStarted = false;
     this.gameEnded = false;
     this.board = (() =>
       Array.from({ length: size }, () =>
-        Array.from({ length: size }, () => false)
+        Array.from({ length: size }, () => "")
       ))();
   }
   nextTurn() {
-    if (!this.player) return (this.player = "x");
-    return (this.player = this.player === "x" ? "o" : "x");
+    this.player = this.player === "x" ? "o" : "x";
   }
 
   checkWin() {
+    if (this.board.every((item) => item.every((cell) => cell))) {
+      this.gameEnded = true;
+      this.draw = true;
+    }
     // horisontal
     for (let x = 0; x < this.board.length; x++) {
       let winner = this.board[x][0];
@@ -29,7 +34,8 @@ class Game {
       }
       if (winner && isWin) {
         this.gameEnded = true;
-        return winner;
+        this.winner = winner;
+        return;
       }
     }
 
@@ -45,7 +51,8 @@ class Game {
       }
       if (winner && isWin) {
         this.gameEnded = true;
-        return winner;
+        this.winner = winner;
+        return;
       }
     }
 
@@ -60,7 +67,8 @@ class Game {
     }
     if (winner && isWin) {
       this.gameEnded = true;
-      return winner;
+      this.winner = winner;
+      return;
     }
 
     // side diagonal
@@ -74,34 +82,8 @@ class Game {
     }
     if (winner && isWin) {
       this.gameEnded = true;
-      return winner;
+      this.winner = winner;
+      return;
     }
   }
 }
-
-/*
-const game = new Game(4);
-game.board[1][0] = "x";
-game.board[1][1] = "x";
-game.board[1][2] = "x";
-game.board[1][3] = "x";
-
-game.board[0][0] = "x";
-game.board[1][0] = "x";
-game.board[2][0] = "x";
-game.board[3][0] = "x";
-
-game.board[0][0] = "x";
-game.board[1][1] = "x";
-game.board[2][2] = "x";
-game.board[3][3] = "x";
-
-game.board[0][3] = "o";
-game.board[1][2] = "o";
-game.board[2][1] = "o";
-game.board[3][0] = "o";
-
-game.player = "x";
-log(game.board);
-log(game.checkWin());
-*/

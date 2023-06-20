@@ -1,32 +1,38 @@
-.x{
+.x,
+.xhover {
   position: relative;
   cursor: pointer;
 }
 
 .x::before,
-.x::after{
-  content: '';
+.x::after,
+.xhover::before,
+.xhover::after {
+  content: "";
   position: absolute;
   width: 80%;
   height: 4px;
   background-color: white;
 }
 
-.x::before{
+.x::before,
+.xhover::before {
   transform: rotate(45deg);
 }
 
-.x::after{
+.x::after,
+.xhover::after {
   transform: rotate(-45deg);
 }
 
-.o {
+.o, .ohover {
   position: relative;
   cursor: pointer;
 }
 
-.o::before{
-  content: '';
+.o::before,
+.ohover::before {
+  content: "";
   position: absolute;
   width: 75%;
   height: 75%;
@@ -34,8 +40,9 @@
   background-color: white;
 }
 
-.o::after{
-  content: '';
+.o::after,
+.ohover::after {
+  content: "";
   position: absolute;
   width: calc(75% - 8px);
   height: calc(75% - 8px);
