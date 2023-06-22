@@ -8,6 +8,7 @@ export default class Game {
     this.draw = null;
     this.gameStarted = false;
     this.gameEnded = false;
+    this.gameLog = [];
     this.board = (() =>
       Array.from({ length: size }, () =>
         Array.from({ length: size }, () => "")
@@ -18,10 +19,6 @@ export default class Game {
   }
 
   checkWin() {
-    if (this.board.every((item) => item.every((cell) => cell))) {
-      this.gameEnded = true;
-      this.draw = true;
-    }
     // horisontal
     for (let x = 0; x < this.board.length; x++) {
       let winner = this.board[x][0];
@@ -85,5 +82,36 @@ export default class Game {
       this.winner = winner;
       return;
     }
+    if (!isWin && this.board.every((item) => item.every((cell) => cell))) {
+      this.gameEnded = true;
+      this.draw = true;
+    }
+  }
+
+  log(x, y) {
+    let logEntry;
+
+    if (this.draw) {
+      logEntry = [
+        `Player ${this.player.toUpperCase()} attacked [${x}, ${y}] board cell with "${
+          this.player
+        }" mark`,
+        `Game over! It's a draw!`,
+      ];
+    } else {
+      logEntry = !this.gameEnded
+        ? `Player ${this.player.toUpperCase()} attacked [${x}, ${y}] board cell with "${
+            this.player
+          }" mark`
+        : [
+            `Player ${this.player.toUpperCase()} attacked [${x}, ${y}] board cell with "${
+              this.player
+            }" mark`,
+            `Game over! Winner: ${this.winner.toUpperCase()}`,
+          ];
+    }
+    if (Array.isArray(logEntry))
+      logEntry.forEach((item) => this.gameLog.push(item));
+    else this.gameLog.push(logEntry);
   }
 }

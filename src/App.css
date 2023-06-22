@@ -1,17 +1,19 @@
+
+
 .App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  gap: 20px;
+  display: grid;
+  grid-template-rows: 2fr 1fr 2fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
+   min-height: 100vh;
+  gap: 50px;
 }
 
-.row{
+.row {
   display: flex;
 }
 
-.square{
+.square {
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -24,24 +26,79 @@
   font-size: 3rem;
 }
 
-.ui{
+.ui {
   padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   -border: 1px solid black;
 }
 
-.btn{
+.gamelog {
+  align-self: flex-start;
+  grid-row: 3;
+  padding: 10px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.btn {
   background-color: white;
   border: 1px solid black;
   width: 120px;
   height: 40px;
 }
 
-.btn:hover{
+.btn:hover {
   font-weight: bold;
-   border: 2px solid black;
+  border: 2px solid black;
 }
 
-.btn:active{
+.btn:active {
   transform: scale(0.9);
 }
 
+.welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid black;
+  padding: 20px 20px;
+}
+
+.board-container{
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+}
+
+.result {
+  grid-row: 1;
+  align-self: flex-end;
+  text-align: center;
+  background-color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.start-div{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+  
