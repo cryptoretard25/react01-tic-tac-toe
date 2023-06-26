@@ -82,6 +82,7 @@ export default class Game {
       this.winner = winner;
       return;
     }
+
     if (!isWin && this.board.every((item) => item.every((cell) => cell))) {
       this.gameEnded = true;
       this.draw = true;

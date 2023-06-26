@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import Game from "./modules/game";
 
-const game = new Game(3);
+let game = new Game(3);
 
 const handlers = (() => {
   const oneSquareEnter = (e) => {
@@ -28,24 +28,17 @@ const handlers = (() => {
 })();
 
 function GameOver({onclk}) {
-  if(game.draw){
-    return (
-      <div className="result">
-        <h1>Game over! It's a draw!</h1>
-        <Button name={"Restart"} onclk={onclk} />
-      </div>
-    );
+  const result = ()=>{
+    if(game.draw) return `Game over! It's a draw!`
+    else return `Game over! ${game.winner.toUpperCase()} wins!`
   }
+
   return (
     <div className="result">
-      <h1>Game over! {game.winner.toUpperCase()} wins!</h1>
+      <h1>{result()}</h1>
       <Button name={"Restart"} onclk={onclk} />
     </div>
   );
-}
-
-function Draw() {
-  return <h1 className="result">It's a draw!</h1>
 }
 
 function Square({ mark, onSquareClick }) {
@@ -68,13 +61,7 @@ function Board({ squares, onSquareClick}) {
             <div className="row" key={x}>
               {row.map((_, y) => {
                 return (
-                  <Square
-                    key={`[${x}][${y}]`}
-                    mark={squares[x][y]}
-                    onSquareClick={() => {
-                      onSquareClick(x, y);
-                    }}
-                  />
+                  <Square key={`[${x}][${y}]`} mark={squares[x][y]} onSquareClick={() => { onSquareClick(x, y); }} />
                 );
               })}
             </div>
@@ -84,15 +71,6 @@ function Board({ squares, onSquareClick}) {
     </div>
   );
 }
-
-// function Ui() {
-//   return (
-//     <div className="ui">
-//       <Button name={"Restart"} />
-//       <Button name={"Click me!"} />
-//     </div>
-//   );
-// }
 
 function Gamelog() {
   return (
@@ -105,7 +83,7 @@ function Gamelog() {
   );
 }
 
-function Gameflow() {
+function Gameflow({onRestartClick}) {
   const [squares, setSquares] = useState(game.board);
 
   const onSquareClick = (x, y) => {
@@ -120,31 +98,17 @@ function Gameflow() {
     }
   };
 
-  if (!game.gameEnded) {
-    return (
-      <>
-        <Board squares={squares} onSquareClick={onSquareClick} />
-        <Gamelog />
-      </>
-    );
-  } else {
-    if (game.winner)
-      return (
-        <>
-          <GameOver />
-          <Board squares={squares} onSquareClick={onSquareClick} />
-          <Gamelog />
-        </>
-      );
-    // else if (game.draw)
-    //   return (
-    //     <>
-    //       <Draw />
-    //       <Board squares={squares} onSquareClick={onSquareClick} />
-    //       <Gamelog />
-    //     </>
-    //   );
+  const onEndGame = ()=>{
+    if(game.winner || game.draw) return <GameOver onclk={onRestartClick}/>
   }
+
+  return (
+    <>
+      {onEndGame()}
+      <Board squares={squares} onSquareClick={onSquareClick} />
+      <Gamelog />
+    </>
+  )
 }
 
 function Button({ name, onclk }) {
@@ -157,6 +121,7 @@ function Button({ name, onclk }) {
 
 function Start({ setGameStarted }) {
   const onStartClick = () => {
+    game = new Game(3)
     console.log("click");
     game.gameStarted = true;
     setGameStarted(game.gameStarted);
@@ -201,10 +166,14 @@ function Start({ setGameStarted }) {
 
 function App() {
   const [gameStarted, setGameStarted] = useState(game.gameStarted);
+  const onGameRestartClick = ()=>{
+    game = new Game(3);
+    setGameStarted(game.gameStarted);
+  }
 
   return (
     <div className="App">
-      {gameStarted ? <Gameflow /> : <Start setGameStarted={setGameStarted} />}
+      {gameStarted ? <Gameflow onRestartClick={onGameRestartClick} /> : <Start setGameStarted={setGameStarted} />}
     </div>
   );
 }
