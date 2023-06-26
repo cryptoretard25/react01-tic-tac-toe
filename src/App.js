@@ -27,17 +27,12 @@ const handlers = (() => {
   return { oneSquareEnter, onSquareLeave, onStartClick };
 })();
 
-function GameOver({onclk}) {
-  const result = ()=>{
-    if(game.draw) return `Game over! It's a draw!`
-    else return `Game over! ${game.winner.toUpperCase()} wins!`
-  }
 
+function Button({ name, onclk }) {
   return (
-    <div className="result">
-      <h1>{result()}</h1>
-      <Button name={"Restart"} onclk={onclk} />
-    </div>
+    <button className="btn" onClick={onclk}>
+      {name}
+    </button>
   );
 }
 
@@ -87,10 +82,9 @@ function Gameflow({onRestartClick}) {
   const [squares, setSquares] = useState(game.board);
 
   const onSquareClick = (x, y) => {
-    if (!game.board[x][y] && !game.gameEnded) {
-      game.board[x][y] = game.player;
+    const result = game.attack(x, y)
+    if (result) {
       const copy = [...game.board];
-      console.log(game.board);
       setSquares(copy);
       game.checkWin();
       game.log(x, y);
@@ -109,14 +103,6 @@ function Gameflow({onRestartClick}) {
       <Gamelog />
     </>
   )
-}
-
-function Button({ name, onclk }) {
-  return (
-    <button className="btn" onClick={onclk}>
-      {name}
-    </button>
-  );
 }
 
 function Start({ setGameStarted }) {
@@ -164,6 +150,21 @@ function Start({ setGameStarted }) {
   );
 }
 
+function GameOver({ onclk }) {
+  const result = () => {
+    if (game.draw) return `Game over! It's a draw!`;
+    else return `Game over! ${game.winner.toUpperCase()} wins!`;
+  };
+
+  return (
+    <div className="result">
+      <h1>{result()}</h1>
+      <h1>Play again?</h1>
+      <Button name={"Restart"} onclk={onclk} />
+    </div>
+  );
+}
+
 function App() {
   const [gameStarted, setGameStarted] = useState(game.gameStarted);
   const onGameRestartClick = ()=>{
@@ -173,7 +174,8 @@ function App() {
 
   return (
     <div className="App">
-      {gameStarted ? <Gameflow onRestartClick={onGameRestartClick} /> : <Start setGameStarted={setGameStarted} />}
+      {gameStarted ? <Gameflow onRestartClick={onGameRestartClick} /> 
+      : <Start setGameStarted={setGameStarted} />}
     </div>
   );
 }

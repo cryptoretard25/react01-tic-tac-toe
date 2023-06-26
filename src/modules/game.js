@@ -18,6 +18,14 @@ export default class Game {
     this.player = this.player === "x" ? "o" : "x";
   }
 
+  attack(x, y) {
+    if (!this.board[x][y] && !this.gameEnded) {
+      this.board[x][y] = this.player;
+      return true
+    }
+    return false
+  }
+
   checkWin() {
     // horisontal
     for (let x = 0; x < this.board.length; x++) {

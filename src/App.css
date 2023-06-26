@@ -79,7 +79,7 @@
 }
 
 .result {
-  grid-row: 1;
+  position: relative;
   align-self: flex-end;
   text-align: center;
   background-color: white;
@@ -89,6 +89,19 @@
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.result {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.93);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
 }
 
 .start-div{
