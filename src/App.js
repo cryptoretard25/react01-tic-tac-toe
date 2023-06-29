@@ -3,12 +3,19 @@ import "./styles/marks.css";
 import React from "react";
 import { useState } from "react";
 import Game from "./modules/game";
+import createObjCopy from "./modules/copyObject";
 
 let game = new Game(3);
 
+
+
 const handlers = (() => {
   const oneSquareEnter = (e) => {
-    if (e.target.classList.contains("o") || e.target.classList.contains("x")||game.gameEnded)
+    if (
+      e.target.classList.contains("o") ||
+      e.target.classList.contains("x") ||
+      game.gameEnded
+    )
       return;
     game.player === "x"
       ? e.target.classList.add("xhover")
@@ -26,7 +33,6 @@ const handlers = (() => {
 
   return { oneSquareEnter, onSquareLeave, onStartClick };
 })();
-
 
 function Button({ name, onclk }) {
   return (
@@ -47,7 +53,7 @@ function Square({ mark, onSquareClick }) {
   );
 }
 
-function Board({ squares, onSquareClick}) {
+function Board({ squares, onSquareClick }) {
   return (
     <div className="board-container">
       <div>
@@ -56,7 +62,13 @@ function Board({ squares, onSquareClick}) {
             <div className="row" key={x}>
               {row.map((_, y) => {
                 return (
-                  <Square key={`[${x}][${y}]`} mark={squares[x][y]} onSquareClick={() => { onSquareClick(x, y); }} />
+                  <Square
+                    key={`[${x}][${y}]`}
+                    mark={squares[x][y]}
+                    onSquareClick={() => {
+                      onSquareClick(x, y);
+                    }}
+                  />
                 );
               })}
             </div>
@@ -67,52 +79,65 @@ function Board({ squares, onSquareClick}) {
   );
 }
 
-function Gamelog() {
+function Gamelog({ onUndoClick }) {
   return (
     <div className="gamelog">
       <h3>Game log:</h3>
       {game.gameLog.map((entry, index) => (
-        <div key={index}>{entry}</div>
+        <div className="gamelog-cell" key={index}>
+          <div className="gamelog-text">{entry}</div>
+          <Button name={"Return"} onclk={() => onUndoClick(index)} />
+        </div>
       ))}
     </div>
   );
 }
 
-function Gameflow({onRestartClick}) {
+function Gameflow({ onRestartClick }) {
+  let [history, setHistory] = useState([
+    Object.assign(new Game(), createObjCopy(game)),
+  ]);
   const [squares, setSquares] = useState(game.board);
 
   const onSquareClick = (x, y) => {
-    const result = game.attack(x, y)
+    const result = game.attack(x, y);
     if (result) {
       const copy = [...game.board];
       setSquares(copy);
       game.checkWin();
       game.log(x, y);
       game.nextTurn();
+      setHistory((prevHistory) => [
+        ...prevHistory,
+        Object.assign(new Game(), createObjCopy(game)),
+      ]);
     }
   };
 
-  const onEndGame = ()=>{
-    if(game.winner || game.draw) return <GameOver onclk={onRestartClick}/>
-  }
+  const onUndoClick = (key) => {
+    game = history[key];
+    const updatedHistory = [...history];
+    updatedHistory.splice(key+1);
+    setHistory(
+      updatedHistory.map((item) => Object.assign(new Game(3), createObjCopy(item)))
+    );
+    setSquares(game.board);
+  };
+
+  const onEndGame = () => {
+    if (game.winner || game.draw) return <GameOver onclk={onRestartClick} />;
+  };
 
   return (
     <>
       {onEndGame()}
       <Board squares={squares} onSquareClick={onSquareClick} />
-      <Gamelog />
+      <Gamelog onUndoClick={onUndoClick} />
     </>
-  )
+  );
 }
 
-function Start({ setGameStarted }) {
-  const onStartClick = () => {
-    game = new Game(3)
-    console.log("click");
-    game.gameStarted = true;
-    setGameStarted(game.gameStarted);
-  };
-
+function Start({ onStartClick }) {
   return (
     <div className="start-div">
       <div className="welcome">
@@ -167,15 +192,25 @@ function GameOver({ onclk }) {
 
 function App() {
   const [gameStarted, setGameStarted] = useState(game.gameStarted);
-  const onGameRestartClick = ()=>{
+
+  const onGameRestartClick = () => {
     game = new Game(3);
     setGameStarted(game.gameStarted);
-  }
+  };
+
+  const onStartClick = () => {
+    game = new Game(3);
+    game.gameStarted = true;
+    setGameStarted(game.gameStarted);
+  };
 
   return (
     <div className="App">
-      {gameStarted ? <Gameflow onRestartClick={onGameRestartClick} /> 
-      : <Start setGameStarted={setGameStarted} />}
+      {gameStarted ? (
+        <Gameflow onRestartClick={onGameRestartClick} />
+      ) : (
+        <Start onStartClick={onStartClick} />
+      )}
     </div>
   );
 }

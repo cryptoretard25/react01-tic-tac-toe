@@ -2,11 +2,11 @@
 
 .App {
   display: grid;
-  grid-template-rows: 2fr 1fr 2fr;
+  grid-template-rows: 1.5fr 1fr 3fr;
   grid-template-columns: 1fr;
   justify-items: center;
    min-height: 100vh;
-  gap: 50px;
+  gap: 20px;
 }
 
 .row {
@@ -42,19 +42,30 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 5px;
+  gap: 3px;
+}
+
+.gamelog-cell{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.gamelog-text{
+  width: 350px;
 }
 
 .btn {
   background-color: white;
   border: 1px solid black;
+  padding: 10px 0;
   width: 120px;
-  height: 40px;
+  height: 35px;
 }
 
 .btn:hover {
   font-weight: bold;
-  border: 2px solid black;
+  outline: 1px solid black;
 }
 
 .btn:active {
@@ -95,7 +106,7 @@
   position: fixed;
   top: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.93);
   color: white;
   display: flex;

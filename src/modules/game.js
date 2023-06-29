@@ -8,7 +8,7 @@ export default class Game {
     this.draw = null;
     this.gameStarted = false;
     this.gameEnded = false;
-    this.gameLog = [];
+    this.gameLog = ['Game started'];
     this.board = (() =>
       Array.from({ length: size }, () =>
         Array.from({ length: size }, () => "")
@@ -21,9 +21,8 @@ export default class Game {
   attack(x, y) {
     if (!this.board[x][y] && !this.gameEnded) {
       this.board[x][y] = this.player;
-      return true
+      return true;
     }
-    return false
   }
 
   checkWin() {
