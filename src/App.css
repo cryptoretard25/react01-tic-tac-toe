@@ -2,7 +2,7 @@
 
 .App {
   display: grid;
-  grid-template-rows: 3fr 3fr;
+  grid-template-rows: 2fr 1fr 2fr;
   grid-template-columns: 1fr;
   justify-items: center;
   min-height: 100vh;
@@ -26,23 +26,31 @@
   font-size: 3rem;
 }
 
-.ui {
-  padding: 10px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  -border: 1px solid black;
-}
-
 .gamelog {
   align-self: flex-start;
-  grid-row: 2;
+  grid-row: 3;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 3px;
+}
+
+.status {
+  align-self: flex-end;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.ui{
+  align-self: flex-start;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px
 }
 
 .gamelog-cell{
@@ -72,57 +80,15 @@
   transform: scale(0.9);
 }
 
-.welcome {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  border: 1px solid black;
-  padding: 20px 20px;
-}
-
 .board-container{
-  grid-row: 1;
+  grid-row: 2;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
   width: 100%;
   position: relative;
 }
 
-.result {
-  position: relative;
-  align-self: flex-end;
-  text-align: center;
-  background-color: white;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
 
-.result {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.93);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-}
-
-.start-div{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
   
