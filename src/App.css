@@ -1,9 +1,7 @@
-
-
 .App {
   display: grid;
   grid-template-rows: 2fr 1fr 2fr;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   justify-items: center;
   min-height: 100vh;
   gap: 20px;
@@ -27,39 +25,44 @@
 }
 
 .gamelog {
-  align-self: flex-start;
-  grid-row: 3;
-  padding: 10px 20px;
+  grid-row: 1/4;
+  grid-column: 3;
+  justify-self: start;
+
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   gap: 3px;
+
 }
 
 .status {
   align-self: flex-end;
   grid-row: 1;
+  grid-column: 2;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 3px;
 }
 
-.ui{
+.ui {
   align-self: flex-start;
   grid-row: 3;
+  grid-column: 2;
   display: flex;
   align-items: center;
-  gap: 10px
+  gap: 10px;
 }
 
-.gamelog-cell{
+.gamelog-cell {
   display: flex;
   align-items: center;
   gap: 20px;
 }
 
-.gamelog-text{
+.gamelog-text {
   width: 350px;
 }
 
@@ -80,15 +83,12 @@
   transform: scale(0.9);
 }
 
-.board-container{
+.board-container {
   grid-row: 2;
+  grid-column: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   position: relative;
 }
-
-
-
-  
