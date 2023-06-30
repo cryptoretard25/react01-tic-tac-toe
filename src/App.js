@@ -5,9 +5,8 @@ import { useState } from "react";
 import Game from "./modules/game";
 import createObjCopy from "./modules/copyObject";
 
-let game = new Game(3);
-
-
+const size = 3
+let game = new Game(size);
 
 const handlers = (() => {
   const oneSquareEnter = (e) => {
@@ -116,10 +115,11 @@ function Gameflow({ onRestartClick }) {
 
   const onUndoClick = (key) => {
     game = history[key];
-    const updatedHistory = [...history];
-    updatedHistory.splice(key+1);
+    const updatedHistory = [...history].splice(0, key + 1);
     setHistory(
-      updatedHistory.map((item) => Object.assign(new Game(3), createObjCopy(item)))
+      updatedHistory.map((item) =>
+        Object.assign(new Game(), createObjCopy(item))
+      )
     );
     setSquares(game.board);
   };
@@ -194,12 +194,12 @@ function App() {
   const [gameStarted, setGameStarted] = useState(game.gameStarted);
 
   const onGameRestartClick = () => {
-    game = new Game(3);
+    game = new Game(size);
     setGameStarted(game.gameStarted);
   };
 
   const onStartClick = () => {
-    game = new Game(3);
+    game = new Game(size);
     game.gameStarted = true;
     setGameStarted(game.gameStarted);
   };
