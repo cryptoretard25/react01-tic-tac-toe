@@ -103,6 +103,7 @@ function App() {
   return (
     <div className="App">
       <div className="status">
+        <h3>Current round: {currentMove}</h3>
         <h3>{status(currentSquares)}</h3>
       </div>
       <Board squares={currentSquares} xIsNext={xIsNext} onPlay={handlePlay} />
