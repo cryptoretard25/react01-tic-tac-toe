@@ -67,8 +67,6 @@ function Gamelog({ history, onGoToClick }) {
 }
 
 function App() {
-  //const [xIsNext, setXisNext] = useState(true);
-  
   const [history, setHistory] = useState([board]);
   const [currentMove, setCurrentMove] = useState(0);
   const currentSquares = history[history.length - 1];
@@ -77,20 +75,17 @@ function App() {
   const handlePlay = (nextSquares) => {
     setCurrentMove(currentMove + 1);
     setHistory([...history, nextSquares]);
-    //setXisNext(!xIsNext);
   };
 
   const handleRestartButton = () => {
     setHistory([board]);
     setCurrentMove(0)
-    //setXisNext(true);
   };
 
   const handleGoTo = (index) => {
     const currHistory = history.splice(0, index + 1);
     setHistory([...currHistory.map((item) => [...item])]);
     setCurrentMove(index)
-    //setXisNext(index % 2 === 0);
   };
 
   const status = (squares) => {
