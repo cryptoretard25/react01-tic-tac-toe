@@ -106,10 +106,7 @@ function Gameflow({ onRestartClick }) {
       game.checkWin();
       game.log(x, y);
       game.nextTurn();
-      setHistory((prevHistory) => [
-        ...prevHistory,
-        Object.assign(new Game(), createObjCopy(game)),
-      ]);
+      setHistory([...history, Object.assign(new Game(), createObjCopy(game))]);
     }
   };
 
