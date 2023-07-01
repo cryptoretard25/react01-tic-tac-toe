@@ -25,25 +25,25 @@ function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares);
   };
 
-  return (
-    <div className="board-container">
-      <div>
-        {squares.map((row, x) => {
+  const rows = squares.map((row, x) => {
+    return (
+      <div className="row" key={x}>
+        {row.map((cell, y) => {
           return (
-            <div className="row" key={x}>
-              {row.map((cell, y) => {
-                return (
-                  <Square
-                    key={[x, y]}
-                    mark={cell}
-                    onSquareClick={() => handleSquareClick(x, y)}
-                  />
-                );
-              })}
-            </div>
+            <Square
+              key={[x, y]}
+              mark={cell}
+              onSquareClick={() => handleSquareClick(x, y)}
+            />
           );
         })}
       </div>
+    );
+  });
+
+  return (
+    <div className="board-container">
+      <div>{rows}</div>
     </div>
   );
 }
@@ -85,7 +85,6 @@ function App() {
     const currHistory = history.splice(0, index + 1);
     setHistory([...currHistory.map((item) => [...item])]);
     setXisNext(index % 2 === 0);
-    console.log(currHistory);
   };
 
   const status = (squares) => {
