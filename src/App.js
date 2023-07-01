@@ -2,7 +2,7 @@ import "./App.css";
 import "./styles/marks.css";
 import React from "react";
 import { useState } from "react";
-import { board, isWin, isDraw } from "./modules/gamerules";
+import { board, isWin, isDraw, moveCount } from "./modules/gamerules";
 
 function Square({ mark, onSquareClick }) {
   return <div className={`square ${mark}`} onClick={onSquareClick}></div>;
@@ -48,13 +48,13 @@ function Board({ xIsNext, squares, onPlay }) {
   );
 }
 
-function Gamelog({ history, onGoClick }) {
+function Gamelog({ history, onGoToClick }) {
   const moves = history.map((item, index) => {
     let description = index > 0 ? `Go to move #${index}` : "Go to game start";
 
     return (
       <li key={index}>
-        <Button name={description} onButtonClick={() => onGoClick(index)} />
+        <Button name={description} onButtonClick={() => onGoToClick(index)} />
       </li>
     );
   });
@@ -67,24 +67,30 @@ function Gamelog({ history, onGoClick }) {
 }
 
 function App() {
-  const [xIsNext, setXisNext] = useState(true);
+  //const [xIsNext, setXisNext] = useState(true);
+  
   const [history, setHistory] = useState([board]);
+  const [currentMove, setCurrentMove] = useState(0);
   const currentSquares = history[history.length - 1];
+  const xIsNext = currentMove % 2 === 0;
 
   const handlePlay = (nextSquares) => {
+    setCurrentMove(currentMove + 1);
     setHistory([...history, nextSquares]);
-    setXisNext(!xIsNext);
+    //setXisNext(!xIsNext);
   };
 
   const handleRestartButton = () => {
     setHistory([board]);
-    setXisNext(true);
+    setCurrentMove(0)
+    //setXisNext(true);
   };
 
-  const handleGo = (index) => {
+  const handleGoTo = (index) => {
     const currHistory = history.splice(0, index + 1);
     setHistory([...currHistory.map((item) => [...item])]);
-    setXisNext(index % 2 === 0);
+    setCurrentMove(index)
+    //setXisNext(index % 2 === 0);
   };
 
   const status = (squares) => {
@@ -103,7 +109,7 @@ function App() {
       <div className="ui">
         <Button name={"Restart"} onButtonClick={handleRestartButton} />
       </div>
-      <Gamelog history={history} onGoClick={handleGo} />
+      <Gamelog history={history} onGoToClick={handleGoTo} />
     </div>
   );
 }

@@ -1,7 +1,11 @@
 const size = 3;
 
+let moveCount = 0;
+
 const board = (() =>
   Array.from({ length: size }, () => Array.from({ length: size }, () => "")))();
+
+
 
 function isWin(board) {
   const lines = [
@@ -37,4 +41,6 @@ function isDraw(board){
   }
 }
 
-export {board, isWin, isDraw}
+
+
+export { board, isWin, isDraw, moveCount };
